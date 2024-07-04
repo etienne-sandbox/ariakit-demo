@@ -1,3 +1,9 @@
+import { Button } from "./button/Button";
+
 export function App() {
-  return <h1 className="text-xl">Hello</h1>;
+  return (
+    <div>
+      <Button title="This is a button" />
+    </div>
+  );
 }
