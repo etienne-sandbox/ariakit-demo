@@ -1,5 +1,3 @@
-import { forwardRef } from "react";
-
 export interface TSelectItem {
   value: string;
   title: string;
@@ -12,6 +10,6 @@ interface SelectProps {
   items: TSelectItem[];
 }
 
-export const Select = forwardRef<HTMLDivElement, SelectProps>(function Select({ label, items }, ref) {
+export function Select({ label, items }: SelectProps) {
   return <div>TODO</div>;
-});
+}

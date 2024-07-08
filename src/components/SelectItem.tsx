@@ -17,7 +17,9 @@ export const SelectItem = forwardRef<HTMLDivElement, SelectItemProps>(function S
         tw`flex flex-row items-center justify-center text-left group overflow-hidden relative shrink-0`,
         tw`rounded cursor-pointer`,
         tw`aria-disabled:opacity-30`,
-        tw`data-active-item:bg-dynamic-600 data-active-item:text-white`
+        tw`data-active-item:bg-dynamic-600/20`,
+        tw`aria-selected:bg-dynamic-600 aria-selected:text-white`,
+        tw`data-active-item:aria-selected:bg-dynamic-700`
       )}
     >
       <ButtonContent title={item.title} icon={item.icon} />
