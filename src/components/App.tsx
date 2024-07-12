@@ -1,4 +1,12 @@
-import { AppleLogo, DiscordLogo, FigmaLogo, RedditLogo, SlackLogo, TwitterLogo, XLogo } from "@phosphor-icons/react";
+import {
+  AppleLogo,
+  DiscordLogo,
+  FigmaLogo,
+  RedditLogo,
+  SlackLogo,
+  TwitterLogo,
+  XLogo,
+} from "@phosphor-icons/react";
 import { Select, TSelectItem } from "./Select";
 
 const ITEMS: TSelectItem[] = [

@@ -1,4 +1,11 @@
-import { ComponentType, Fragment, PropsWithChildren, createContext, useContext, useMemo } from "react";
+import {
+  ComponentType,
+  Fragment,
+  PropsWithChildren,
+  createContext,
+  useContext,
+  useMemo,
+} from "react";
 
 export interface TPropsContext<Props extends Record<string, any>> {
   Provider: ComponentType<PropsWithChildren<Partial<Props>>>;
@@ -8,22 +15,30 @@ export interface TPropsContext<Props extends Record<string, any>> {
 
 export function createPropsContext<Props extends Record<string, any>>(
   name: string,
-  defaultProps: Props
+  defaultProps: Props,
 ): TPropsContext<Props> {
   const contexts = new Map<keyof Props, React.Context<Props[keyof Props]>>();
 
   const allKeys = Object.keys(defaultProps).sort();
 
-  const Provider: ComponentType<PropsWithChildren<Partial<Props>>> = ({ children, ...props }) => {
-    const overrideProps = Object.keys(props).filter((key) => allKeys.includes(key)) as (keyof Props)[];
+  const Provider: ComponentType<PropsWithChildren<Partial<Props>>> = ({
+    children,
+    ...props
+  }) => {
+    const overrideProps = Object.keys(props).filter((key) =>
+      allKeys.includes(key),
+    ) as (keyof Props)[];
     if (overrideProps.length === 0) {
       return <Fragment>{children}</Fragment>;
     }
-    return overrideProps.reduce((acc, key) => {
-      const context = getContext(key);
-      const value = (props as Props)[key];
-      return <context.Provider value={value}>{acc}</context.Provider>;
-    }, <Fragment>{children}</Fragment>);
+    return overrideProps.reduce(
+      (acc, key) => {
+        const context = getContext(key);
+        const value = (props as Props)[key];
+        return <context.Provider value={value}>{acc}</context.Provider>;
+      },
+      <Fragment>{children}</Fragment>,
+    );
   };
   Provider.displayName = `${name}Props.Provider`;
 
@@ -52,7 +67,7 @@ export function createPropsContext<Props extends Record<string, any>>(
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const value = useContext(getContext(key));
         return [key, value];
-      })
+      }),
     );
     const res = { ...contextProps } as any;
     for (const key in directProps) {

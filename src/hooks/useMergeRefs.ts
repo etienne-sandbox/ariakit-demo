@@ -10,7 +10,10 @@ export function useMergeRefs(...refs: Array<Ref<any> | undefined>) {
   }, refs);
 }
 
-function setRef<T>(ref: RefCallback<T> | MutableRefObject<T> | null | undefined, value: T) {
+function setRef<T>(
+  ref: RefCallback<T> | MutableRefObject<T> | null | undefined,
+  value: T,
+) {
   if (typeof ref === "function") {
     ref(value);
   } else if (ref) {

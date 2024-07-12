@@ -12,7 +12,11 @@ interface ButtonGroupProps {
   disabled?: boolean;
 }
 
-export function ButtonGroup({ className, children, ...props }: ButtonGroupProps) {
+export function ButtonGroup({
+  className,
+  children,
+  ...props
+}: ButtonGroupProps) {
   const childrenLength = Children.count(children);
   const { color, size, variant, disabled } = DesignContext.useProps(props);
 
@@ -38,7 +42,15 @@ export function ButtonGroup({ className, children, ...props }: ButtonGroupProps)
               size={size}
               variant={variant}
               disabled={disabled}
-              rounded={isFirst && isLast ? "all" : isFirst ? "start" : isLast ? "end" : "none"}
+              rounded={
+                isFirst && isLast
+                  ? "all"
+                  : isFirst
+                    ? "start"
+                    : isLast
+                      ? "end"
+                      : "none"
+              }
             >
               {!isFirst && <span className={cn("w-px", separatorClass)} />}
               {c}

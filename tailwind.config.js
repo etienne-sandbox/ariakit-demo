@@ -24,7 +24,7 @@ const scrollbarHide = plugin(function ({ addUtilities }) {
         },
       },
     },
-    ["responsive"]
+    ["responsive"],
   );
 });
 

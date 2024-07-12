@@ -3,7 +3,12 @@ import * as Ariakit from "@ariakit/react";
 import { IconContext } from "@phosphor-icons/react";
 import { ComponentPropsWithoutRef, forwardRef, useMemo } from "react";
 import { Merge } from "type-fest";
-import { DesignContext, TDesignRounded, TDesignSize, TDesignVariant } from "../DesignContext";
+import {
+  DesignContext,
+  TDesignRounded,
+  TDesignSize,
+  TDesignVariant,
+} from "../DesignContext";
 import { DynamicColorProvider, TDynamicColor } from "../DynamicColorProvider";
 import { ButtonContent } from "./ButtonContent";
 import { buttonRoundedClass, buttonSizeClass } from "./styles";
@@ -27,50 +32,69 @@ export type ButtonProps = Merge<
   }
 >;
 
-export const Button = forwardRef((inProps: ButtonProps, ref: React.Ref<HTMLButtonElement>) => {
-  const {
-    color,
-    rounded,
-    size,
-    variant,
-    disabled,
+export const Button = forwardRef(
+  (inProps: ButtonProps, ref: React.Ref<HTMLButtonElement>) => {
+    const {
+      color,
+      rounded,
+      size,
+      variant,
+      disabled,
 
-    title,
-    icon,
-    endIcon,
-    details,
-    loading,
-    children = <ButtonContent {...{ title, icon, endIcon, details, loading }} />,
+      title,
+      icon,
+      endIcon,
+      details,
+      loading,
+      children = (
+        <ButtonContent {...{ title, icon, endIcon, details, loading }} />
+      ),
 
-    className,
-    type = "button",
-    ...buttonProps
-  } = DesignContext.useProps(inProps);
+      className,
+      type = "button",
+      ...buttonProps
+    } = DesignContext.useProps(inProps);
 
-  const mainClass = useMemo(() => buttonClassName(size, variant, rounded), [size, variant, rounded]);
+    const mainClass = useMemo(
+      () => buttonClassName(size, variant, rounded),
+      [size, variant, rounded],
+    );
 
-  const iconProps = useMemo(() => ({ size: pick(size, { xs: 16, sm: 16, md: 20, lg: 26 }) }), [size]);
+    const iconProps = useMemo(
+      () => ({ size: pick(size, { xs: 16, sm: 16, md: 20, lg: 26 }) }),
+      [size],
+    );
 
-  return (
-    <DesignContext.Provider rounded={rounded} size={size} variant={variant} disabled={disabled}>
-      <IconContext.Provider value={iconProps}>
-        <DynamicColorProvider color={color}>
-          <Ariakit.Button
-            ref={ref}
-            className={cn(mainClass, className)}
-            disabled={disabled}
-            type={type}
-            {...buttonProps}
-          >
-            {children}
-          </Ariakit.Button>
-        </DynamicColorProvider>
-      </IconContext.Provider>
-    </DesignContext.Provider>
-  );
-});
+    return (
+      <DesignContext.Provider
+        rounded={rounded}
+        size={size}
+        variant={variant}
+        disabled={disabled}
+      >
+        <IconContext.Provider value={iconProps}>
+          <DynamicColorProvider color={color}>
+            <Ariakit.Button
+              ref={ref}
+              className={cn(mainClass, className)}
+              disabled={disabled}
+              type={type}
+              {...buttonProps}
+            >
+              {children}
+            </Ariakit.Button>
+          </DynamicColorProvider>
+        </IconContext.Provider>
+      </DesignContext.Provider>
+    );
+  },
+);
 
-function buttonClassName(size: TDesignSize, variant: TDesignVariant, rounded: TDesignRounded) {
+function buttonClassName(
+  size: TDesignSize,
+  variant: TDesignVariant,
+  rounded: TDesignRounded,
+) {
   const variantClass = pick(variant, {
     primary: cn(
       tw`bg-dynamic-600 text-white ring-dynamic-500/30`,

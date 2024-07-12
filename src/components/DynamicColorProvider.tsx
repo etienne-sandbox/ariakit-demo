@@ -15,7 +15,15 @@ import {
 } from "react";
 import colors from "tailwindcss/colors";
 
-export type TDynamicColor = "blue" | "indigo" | "green" | "orange" | "teal" | "red" | "slate" | "rose";
+export type TDynamicColor =
+  | "blue"
+  | "indigo"
+  | "green"
+  | "orange"
+  | "teal"
+  | "red"
+  | "slate"
+  | "rose";
 
 const DynamicColorContext = createContext<TDynamicColor>("blue");
 
@@ -25,10 +33,10 @@ interface DynamicColorProviderProps {
   children: React.ReactElement; // children must be a single element with a ref pointing to an html element
 }
 
-export const DynamicColorProvider = forwardRef<HTMLElement, DynamicColorProviderProps>(function DynamicColorProvider(
-  { color, force, children },
-  ref,
-) {
+export const DynamicColorProvider = forwardRef<
+  HTMLElement,
+  DynamicColorProviderProps
+>(function DynamicColorProvider({ color, force, children }, ref) {
   const localRef = useRef<HTMLElement | null>(null);
   const mergedRef = useMergeRefs(ref, localRef, getRefProperty(children));
 
@@ -58,7 +66,11 @@ export const DynamicColorProvider = forwardRef<HTMLElement, DynamicColorProvider
   }, [currentColor, shouldSetColor]);
 
   if (currentColor !== parentColor) {
-    return <DynamicColorContext.Provider value={currentColor}>{childrenWithRef}</DynamicColorContext.Provider>;
+    return (
+      <DynamicColorContext.Provider value={currentColor}>
+        {childrenWithRef}
+      </DynamicColorContext.Provider>
+    );
   }
 
   return childrenWithRef;
@@ -69,7 +81,9 @@ function getRefProperty(element: unknown) {
   return element.ref as Ref<any> | undefined;
 }
 
-function isValidElementWithRef<P>(element: unknown): element is ReactElement<P> & RefAttributes<any> {
+function isValidElementWithRef<P>(
+  element: unknown,
+): element is ReactElement<P> & RefAttributes<any> {
   if (!element) return false;
   if (!isValidElement(element)) return false;
   if (!("ref" in element)) return false;
